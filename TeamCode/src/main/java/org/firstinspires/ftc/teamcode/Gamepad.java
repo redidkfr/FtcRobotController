@@ -3,15 +3,18 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
+import org.firstinspires.ftc.teamcode.mechanisms.MecanumDrive;
 import org.firstinspires.ftc.teamcode.mechanisms.mainstuff;
 
 @TeleOp
 public class Gamepad extends OpMode {
     mainstuff hard = new mainstuff();
-
+    MecanumDrive drivetrain = new MecanumDrive();
+    double forward, strafe, rotate;
     @Override
     public void init() {
         hard.init(hardwareMap);
+        drivetrain.init(hardwareMap);
 
     }
 
@@ -29,6 +32,12 @@ public class Gamepad extends OpMode {
             telemetry.addLine("Too Close");
         }
         telemetry.addData("Heading",hard.getHeading());
+
+        //Drivetrain Loop
+        forward = -gamepad1.left_stick_y;
+        strafe = gamepad1.left_stick_x;
+        rotate = gamepad1.right_stick_x;
+        drivetrain.drive(forward,strafe,rotate);
 
 
     }
